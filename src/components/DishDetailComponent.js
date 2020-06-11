@@ -30,13 +30,16 @@ class DishDetail extends Component {
     }
 
     renderComments(comments) {
-        if(comments === null) {
+        if(comments != null) {
             return(
                 <div className="col-12 col-md-5 m-1">
                     <h4>Comments</h4>
                     {comments.map(function(comment) {
+                        var date = new Date(comment.date);
                         return(
-                            <li key={comment.id}>{comment.comment}</li>
+                            <ul className="list-unstyled" key={comment.id}>
+                                <li>{comment.comment} <br></br>-- {comment.author} , {date.toISOString().substring(0, 10)}</li>
+                            </ul>
                         );
                     })}
                 </div>
@@ -49,11 +52,12 @@ class DishDetail extends Component {
     }
 
     render() {
+        console.log(this.props.dish);
         return(
             <div className="container">
                 <div className="row">
                     {this.renderDish(this.props.dish)}
-                    {this.renderComments(this.props.dish['comments'])}
+                    {this.renderComments(this.props.dish!= null?this.props.dish.comments:null)}
                 </div>
             </div>
         );
